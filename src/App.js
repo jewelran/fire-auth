@@ -130,12 +130,12 @@ function App() {
 
   const updateUserName = name =>{
     var user = firebase.auth().currentUser;
-
+    //update user name...........
 user.updateProfile({
   displayName: name,
 }).then(function() {
   // Update successful.
-  console.log('user update seccessfully')
+  console.log('user update seccessfully',user)
 }).catch(error =>{
   console.log(error)
 });
@@ -144,7 +144,7 @@ user.updateProfile({
   const handleFbSingIn = () => {
     firebase.auth().signInWithPopup(fbProvider).then(function(result) {
       // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-      // var token = result.credential.accessToken;
+      var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
       console.log(user)
@@ -161,7 +161,7 @@ user.updateProfile({
     });
   }
   return (
-    <div className="App">
+    <div className="App" style={{backgroundColor:'#e0e0e0',padding:'50px'}}>
       {
         user.isSignIn ? <button onClick={handleSingOut} >Sing out</button> :
           <button onClick={handleSingIn} >SignIn</button>
