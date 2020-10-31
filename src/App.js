@@ -16,6 +16,7 @@ function App() {
     error:'',
     success:false,
   })
+  // handle sing in..........
   const provider = new firebase.auth.GoogleAuthProvider();
   const handleSingIn = () => {
     firebase.auth().signInWithPopup(provider)
@@ -36,6 +37,7 @@ function App() {
       console.log(error.message);
     })
   }
+  // for handle sign out
   const handleSingOut = () =>{
     firebase.auth().signOut()
     .then(res => {
@@ -57,8 +59,10 @@ function App() {
   // const handleSubmit = (e) =>{
     const handleSubmit = (e) =>{
       // console.log(user.email, user.password)
+
     if (user.email && user.password) {
 // console.log('submited')
+//create new user...............
 firebase.auth().createUserWithEmailAndPassword(user.email,user.password)
 .then(res => {
   const newUserInfo={...user};
@@ -67,6 +71,8 @@ firebase.auth().createUserWithEmailAndPassword(user.email,user.password)
 setUser(newUserInfo)
   // console.log(res)
 })
+// end of create new user
+
 .catch(error =>{
   // Handle Errors here.
   const newUserInfo= {...user} //error message show korar jonn.
@@ -81,7 +87,7 @@ setUser(newUserInfo)
     e.preventDefault()
     // e.preventDefault() ...reload na korar jonno use korte hobe
   }
-  // handler blure for....??
+  // handler blure for.. fild valid ..??
   const handleonBlur = (e) => {
     // console.log(e.target.name,e.target.value)
     let isFildValid = true;
@@ -136,7 +142,7 @@ setUser(newUserInfo)
             <input type="password" name="password" onBlur = {handleonBlur} placeholder="Your password" required/>
             <br/>
            <br/>
-            <input style={{cursor:'pointer',borderRadius:'8px',backgroundColor:'orange', padding:'10px 20px',border:'none'}} type="submit" value="submit"/>
+            <input style={{  focus:'none' ,cursor:'pointer',borderRadius:'8px',backgroundColor:'orange', padding:'10px 20px',border:'none'}} type="submit" value="submit"/>
             <p style={{color:'red'}}>{user.error}</p>
             {user.success && <p style={{color:'green'}}>user created successfully</p>}
           </form>
