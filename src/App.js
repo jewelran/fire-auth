@@ -5,8 +5,10 @@ import firebaseConfig from './firebaseConfig';
 import { useState } from 'react';
 firebase.initializeApp(firebaseConfig);
 function App() {
+  const [newUser,setNewUser] = useState(false)
   const[user, setUser] = useState({
     isSignIn : false,
+    newUser:false,
     name:'',
     email:'',
     password:'',
@@ -114,13 +116,18 @@ setUser(newUserInfo)
         </div>
       }
         <h1>Our won authentication</h1>
+        <h3 style={{color:'orange'}}>Sign Up</h3>
+        <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser" id=""/>
+        <label htmlFor="newUser">sing Up</label>
+     
+
         {/* <h2>Name:{user.name}</h2>
         <h3>Email:{user.email}</h3>
         <h3>Password:{user.password}</h3> */}
   
         <form onSubmit={handleSubmit}>
-          <h3 style={{color:'orange'}}>Sign Up</h3>
-            <input name= "name" type="text" onBlur= {handleonBlur} placeholder="Your name" required/>
+          
+            { newUser && <input name= "name" type="text" onBlur= {handleonBlur} placeholder="Your name" required/>}
             <br/>
             <br/>
             <input type="text" name="email" onBlur={handleonBlur} placeholder='Your Email' required/>
