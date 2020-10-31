@@ -85,6 +85,24 @@ function App() {
           setUser(newUserInfo)
           // ...
         });
+        if (!newUser && user.email && user.password) {
+          firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+            .then(res => {
+              const newUserInfo = { ...user };
+              newUserInfo.error = '';
+              newUserInfo.success = true; //for show success message
+              setUser(newUserInfo)
+            })
+            .catch(error => {
+              // Handle Errors here.
+              const newUserInfo = { ...user } //error message show korar jonn.
+              newUserInfo.error = error.message;
+              newUserInfo.success = false; //for hidden success message
+              // console.log(errorCode, errorMessage)
+              setUser(newUserInfo)
+            });
+      
+        }
     }
     e.preventDefault()
     // e.preventDefault() ...reload na korar jonno use korte hobe
@@ -109,24 +127,7 @@ function App() {
 
   }
   // login width email and password.........
-  if (!newUser && user.email && user.password) {
-    firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-      .then(res => {
-        const newUserInfo = { ...user };
-        newUserInfo.error = '';
-        newUserInfo.success = true; //for show success message
-        setUser(newUserInfo)
-      })
-      .catch(error => {
-        // Handle Errors here.
-        const newUserInfo = { ...user } //error message show korar jonn.
-        newUserInfo.error = error.message;
-        newUserInfo.success = false; //for hidden success message
-        // console.log(errorCode, errorMessage)
-        setUser(newUserInfo)
-      });
 
-  }
   const updateUserName = name =>{
     var user = firebase.auth().currentUser;
 
@@ -143,10 +144,11 @@ user.updateProfile({
   const handleFbSingIn = () => {
     firebase.auth().signInWithPopup(fbProvider).then(function(result) {
       // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-      var token = result.credential.accessToken;
+      // var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
-      // ...
+      console.log(user)
+      // .....
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
